@@ -23,4 +23,19 @@ public class UserController {
     public List<UserEntity> showUsers() {
         return userService.getAllUsers();
     }
+
+    @GetMapping("/user/{id}")
+    public UserEntity getUserById(@PathVariable Long id) {
+        return userService.getUserById(id).orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+    @PutMapping("/user/{id}")
+    public UserEntity updateUser(@PathVariable Long id, @RequestBody UserEntity user) {
+        return userService.updateUser(id, user);
+    }
+
+    @DeleteMapping("/user/{id}")
+    public void deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+    }
 }
