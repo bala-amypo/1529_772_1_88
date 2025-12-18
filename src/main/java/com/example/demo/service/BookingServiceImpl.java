@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.exception.ConflictException;
 import com.example.demo.model.Booking;
 import com.example.demo.model.Facility;
 import com.example.demo.model.UserEntity;
@@ -29,12 +28,17 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public Booking createBooking(Long facilityId, Long userId, Booking booking) {
 
+        // rule: end time must be after start time
         if (booking.getEndTime().isBefore(booking.getStartTime())) {
-            throw new ConflictException("End time must be after start time");
+            return null;
         }
 
-        Facility facility = facilityRepository.findById(facilityId).orElseThrow();
-        UserEntity user = userRepository.findById(userId).orElseThrow();
+        Facility facility = facilityRepository.findById(facilityId).orElse(null);
+        UserEntity user = userRepository.findById(userId).orElse(null);
+
+        if (facility == null || user == null) {
+            return null;
+        }
 
         // conflict check
         List<Booking> conflicts =
@@ -45,7 +49,7 @@ public class BookingServiceImpl implements BookingService {
                 );
 
         if (!conflicts.isEmpty()) {
-            throw new ConflictException("Booking time conflict");
+            return null;
         }
 
         booking.setFacility(facility);
@@ -57,13 +61,16 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public Booking cancelBooking(Long bookingId) {
-        Booking booking = bookingRepository.findById(bookingId).orElseThrow();
-        booking.setStatus("CANCELLED");
-        return bookingRepository.save(booking);
+        Booking booking = bookingRepository.findById(bookingId).orElse(null);
+        if (booking != null) {
+            booking.setStatus("CANCELLED");
+            return bookingRepository.save(booking);
+        }
+        return null;
     }
 
     @Override
     public Booking getBooking(Long bookingId) {
-        return bookingRepository.findById(bookingId).orElseThrow();
+        return bookingRepository.findById(bookingId).orElse(null);
     }
 }
