@@ -26,7 +26,7 @@ public class BookingLog {
         this.loggedAt = LocalDateTime.now();
     }
 
-    // getters & setters
+   
     public Long getId() {
         return id;
     }
