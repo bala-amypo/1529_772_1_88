@@ -28,7 +28,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public Booking createBooking(Long facilityId, Long userId, Booking booking) {
 
-        // rule: end time must be after start time
+       
         if (booking.getEndTime().isBefore(booking.getStartTime())) {
             return null;
         }
@@ -40,7 +40,7 @@ public class BookingServiceImpl implements BookingService {
             return null;
         }
 
-        // conflict check
+        
         List<Booking> conflicts =
                 bookingRepository.findByFacilityAndStartTimeLessThanAndEndTimeGreaterThan(
                         facility,

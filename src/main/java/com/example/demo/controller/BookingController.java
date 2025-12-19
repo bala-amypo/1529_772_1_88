@@ -13,7 +13,7 @@ public class BookingController {
     @Autowired
     private BookingService bookingService;
 
-    // POST /bookings/{facilityId}/{userId}
+    
     @PostMapping("/{facilityId}/{userId}")
     public Booking createBooking(
             @PathVariable Long facilityId,
@@ -23,13 +23,10 @@ public class BookingController {
         return bookingService.createBooking(facilityId, userId, booking);
     }
 
-    // PUT /bookings/cancel/{bookingId}
-    @PutMapping("/cancel/{bookingId}")
+   
     public Booking cancelBooking(@PathVariable Long bookingId) {
         return bookingService.cancelBooking(bookingId);
     }
-
-    // GET /bookings/{bookingId}
     @GetMapping("/{bookingId}")
     public Booking getBooking(@PathVariable Long bookingId) {
         return bookingService.getBooking(bookingId);
