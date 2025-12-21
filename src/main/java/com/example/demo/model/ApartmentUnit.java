@@ -1,31 +1,52 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 
 @Entity
-@Table(
-    name = "apartment_units",
-    uniqueConstraints = @UniqueConstraint(columnNames = "unitNumber")
-)
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class ApartmentUnit {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false, unique = true)
     private String unitNumber;
 
-    @Column(nullable = false)
-    private Integer floor;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 
-    @OneToOne
-    @JoinColumn(name = "owner_id")
-    private User owner;
+    public ApartmentUnit() {
+    }
+
+    public ApartmentUnit(String unitNumber, UserEntity user) {
+        this.unitNumber = unitNumber;
+        this.user = user;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUnitNumber() {
+        return unitNumber;
+    }
+
+    public void setUnitNumber(String unitNumber) {
+        this.unitNumber = unitNumber;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
 }
