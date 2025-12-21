@@ -10,6 +10,7 @@ public interface BookingLogService {
     List<BookingLog> getLogsByBooking(Long bookingId);
     List<BookingLog> getAllLogs();
   
+BookingLog addLog(Long bookingId, String message);
 
 
 }
