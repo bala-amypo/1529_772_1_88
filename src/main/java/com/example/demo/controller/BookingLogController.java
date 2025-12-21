@@ -31,6 +31,10 @@ public BookingLog addLog(@RequestBody BookingLogRequest request) {
             request.getLogMessage()
     );
 }
+@PostMapping
+public BookingLog addLog(@RequestBody BookingLog bookingLog) {
+    return bookingLogService.saveLog(bookingLog);
+}
 
 
 }
