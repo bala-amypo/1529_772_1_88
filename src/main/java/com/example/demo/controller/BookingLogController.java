@@ -25,9 +25,12 @@ public List<BookingLog> getAllLogs() {
     return bookingLogService.getAllLogs();
 }
 @PostMapping("/add")
-public BookingLog addLog(@RequestParam Long bookingId,
-                          @RequestParam String message) {
-    return bookingLogService.addLog(bookingId, message);
+public BookingLog addLog(@RequestBody BookingLogRequest request) {
+    return bookingLogService.addLog(
+            request.getBookingId(),
+            request.getLogMessage()
+    );
 }
+
 
 }
