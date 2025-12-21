@@ -20,4 +20,14 @@ public class BookingLogController {
     public List<BookingLog> getLogsByBooking(@PathVariable Long bookingId) {
         return bookingLogService.getLogsByBooking(bookingId);
     }
+    @GetMapping
+public List<BookingLog> getAllLogs() {
+    return bookingLogService.getAllLogs();
+}
+@PostMapping("/add")
+public BookingLog addLog(@RequestParam Long bookingId,
+                          @RequestParam String message) {
+    return bookingLogService.addLog(bookingId, message);
+}
+
 }
