@@ -45,4 +45,10 @@ public class BookingLogServiceImpl implements BookingLogService {
 
         return bookingLogRepository.findByBookingOrderByLoggedAtAsc(booking);
     }
+    @Override
+public List<BookingLog> getAllLogs() {
+    return bookingLogRepository.findAll();
+}
+
+  
 }

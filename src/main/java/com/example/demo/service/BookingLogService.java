@@ -9,10 +9,7 @@ public interface BookingLogService {
 
     List<BookingLog> getLogsByBooking(Long bookingId);
     List<BookingLog> getAllLogs();
-    @GetMapping
-public List<BookingLog> getAllLogs() {
-    return bookingLogService.getAllLogs();
-}
+  
 
 
 }
