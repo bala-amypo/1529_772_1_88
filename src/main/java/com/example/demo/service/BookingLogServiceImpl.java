@@ -49,20 +49,7 @@ public class BookingLogServiceImpl implements BookingLogService {
 public List<BookingLog> getAllLogs() {
     return bookingLogRepository.findAll();
 }
-@Override
-public BookingLog addLog(Long bookingId, String message) {
 
-    Booking booking = bookingRepository.findById(bookingId).orElse(null);
-    if (booking == null) {
-        return null;
-    }
-
-    BookingLog log = new BookingLog();
-    log.setBooking(booking);
-    log.setLogMessage(message);
-
-    return bookingLogRepository.save(log);
-}
 
   
 }

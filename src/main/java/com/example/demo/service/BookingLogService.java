@@ -5,7 +5,7 @@ import com.example.demo.model.BookingLog;
 
 public interface BookingLogService {
 
-    BookingLog addLog(Long bookingId, String message);
+   
 
     List<BookingLog> getLogsByBooking(Long bookingId);
     List<BookingLog> getAllLogs();
