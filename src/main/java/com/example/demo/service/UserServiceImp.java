@@ -17,4 +17,9 @@ public class UserServiceImp implements UserService {
     public UserEntity createUser(UserEntity user) {
         return userRepository.save(user);
     }
+    @Override
+public java.util.List<UserEntity> getAllUsers() {
+    return userRepository.findAll();
+}
+
 }

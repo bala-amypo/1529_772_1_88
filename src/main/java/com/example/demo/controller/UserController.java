@@ -17,6 +17,11 @@ public class UserController {
     public UserEntity createUser(@RequestBody UserEntity user) {
         return userService.createUser(user);
     }
+    @GetMapping("/users")
+public java.util.List<UserEntity> getAllUsers() {
+    return userService.getAllUsers();
+}
+
 }
 
 
