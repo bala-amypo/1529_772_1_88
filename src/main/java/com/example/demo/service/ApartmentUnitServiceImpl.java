@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ApartmentUnitServiceImp implements ApartmentUnitService {
+public class ApartmentUnitServiceImpl implements ApartmentUnitService {
 
     @Autowired
     private ApartmentUnitRepository apartmentUnitRepository;
