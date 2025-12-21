@@ -24,13 +24,7 @@ public class BookingLogController {
 public List<BookingLog> getAllLogs() {
     return bookingLogService.getAllLogs();
 }
-@PostMapping("/add")
-public BookingLog addLog(@RequestBody BookingLogRequest request) {
-    return bookingLogService.addLog(
-            request.getBookingId(),
-            request.getLogMessage()
-    );
-}
+
 @PostMapping
 public BookingLog addLog(@RequestBody BookingLog bookingLog) {
     return bookingLogService.saveLog(bookingLog);

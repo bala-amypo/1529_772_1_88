@@ -50,6 +50,10 @@ public List<BookingLog> getAllLogs() {
     return bookingLogRepository.findAll();
 }
 
+@Override
+public BookingLog saveLog(BookingLog bookingLog) {
+    return bookingLogRepository.save(bookingLog);
+}
 
   
 }

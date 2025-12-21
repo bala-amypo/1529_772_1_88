@@ -11,6 +11,8 @@ public interface BookingLogService {
     List<BookingLog> getAllLogs();
   
 BookingLog addLog(Long bookingId, String message);
+BookingLog saveLog(BookingLog bookingLog);
+
 
 
 }
