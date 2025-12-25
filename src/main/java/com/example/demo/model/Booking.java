@@ -4,27 +4,29 @@ import java.time.LocalDateTime;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "bookings")
 public class Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Facility facility;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private UserEntity user;
 
+    @Column(nullable = false)
     private LocalDateTime startTime;
+
+    @Column(nullable = false)
     private LocalDateTime endTime;
 
     private String status = "CONFIRMED";
 
-    public Booking() {
-    }
+    public Booking() {}
 
-    
     public Long getId() {
         return id;
     }

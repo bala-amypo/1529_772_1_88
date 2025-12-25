@@ -2,9 +2,11 @@ package com.example.demo.service.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.exception.BadRequestException;
+import com.example.demo.exception.ConflictException;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Booking;
 import com.example.demo.model.Facility;
 import com.example.demo.model.UserEntity;
@@ -16,31 +18,33 @@ import com.example.demo.service.BookingService;
 @Service
 public class BookingServiceImpl implements BookingService {
 
-    @Autowired
-    private BookingRepository bookingRepository;
+    private final BookingRepository bookingRepository;
+    private final FacilityRepository facilityRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private FacilityRepository facilityRepository;
+    public BookingServiceImpl(
+            BookingRepository bookingRepository,
+            FacilityRepository facilityRepository,
+            UserRepository userRepository) {
 
-    @Autowired
-    private UserRepository userRepository;
+        this.bookingRepository = bookingRepository;
+        this.facilityRepository = facilityRepository;
+        this.userRepository = userRepository;
+    }
 
     @Override
     public Booking createBooking(Long facilityId, Long userId, Booking booking) {
 
-       
         if (booking.getEndTime().isBefore(booking.getStartTime())) {
-            return null;
+            throw new BadRequestException("time invalid");
         }
 
-        Facility facility = facilityRepository.findById(facilityId).orElse(null);
-        UserEntity user = userRepository.findById(userId).orElse(null);
+        Facility facility = facilityRepository.findById(facilityId)
+                .orElseThrow(() -> new ResourceNotFoundException("Facility not found"));
 
-        if (facility == null || user == null) {
-            return null;
-        }
+        UserEntity user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
-        
         List<Booking> conflicts =
                 bookingRepository.findByFacilityAndStartTimeLessThanAndEndTimeGreaterThan(
                         facility,
@@ -49,7 +53,7 @@ public class BookingServiceImpl implements BookingService {
                 );
 
         if (!conflicts.isEmpty()) {
-            return null;
+            throw new ConflictException("booking conflict");
         }
 
         booking.setFacility(facility);
@@ -61,16 +65,17 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public Booking cancelBooking(Long bookingId) {
-        Booking booking = bookingRepository.findById(bookingId).orElse(null);
-        if (booking != null) {
-            booking.setStatus("CANCELLED");
-            return bookingRepository.save(booking);
-        }
-        return null;
+
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new ResourceNotFoundException("Booking not found"));
+
+        booking.setStatus("CANCELLED");
+        return bookingRepository.save(booking);
     }
 
     @Override
     public Booking getBooking(Long bookingId) {
-        return bookingRepository.findById(bookingId).orElse(null);
+        return bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new ResourceNotFoundException("Booking not found"));
     }
 }
