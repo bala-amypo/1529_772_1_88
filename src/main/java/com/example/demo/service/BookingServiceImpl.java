@@ -10,7 +10,13 @@ public class BookingServiceImpl implements BookingService {
     public Booking createBooking(Long userId, Long facilityId, Booking booking) {
         booking.setUserId(userId);
         booking.setFacilityId(facilityId);
-        booking.setStatus("CONFIRMED");
+        return booking;
+    }
+
+    @Override
+    public Booking getBooking(Long bookingId) {
+        Booking booking = new Booking();
+        booking.setId(bookingId);
         return booking;
     }
 
