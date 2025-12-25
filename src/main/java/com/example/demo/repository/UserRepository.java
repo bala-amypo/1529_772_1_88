@@ -8,7 +8,7 @@ import com.example.demo.model.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    Optional<User> findByUsername(String username);   // ✅ FIX
+    Optional<User> findByEmail(String email);
 
-    boolean existsByUsername(String username);        // ✅ FIX
+    boolean existsByEmail(String email);
 }
