@@ -1,7 +1,8 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
+
+import jakarta.persistence.*;
 
 @Entity
 public class Booking {
@@ -11,7 +12,7 @@ public class Booking {
     private Long id;
 
     @ManyToOne
-    private ApartmentUnit facility;
+    private Facility facility;
 
     @ManyToOne
     private User user;
@@ -20,22 +21,11 @@ public class Booking {
     private LocalDateTime endTime;
     private String status;
 
-    public Booking() {}
-
-    public Booking(ApartmentUnit facility, User user,
-                   LocalDateTime startTime, LocalDateTime endTime, String status) {
-        this.facility = facility;
-        this.user = user;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.status = status;
-    }
-
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public ApartmentUnit getFacility() { return facility; }
-    public void setFacility(ApartmentUnit facility) { this.facility = facility; }
+    public Facility getFacility() { return facility; }
+    public void setFacility(Facility facility) { this.facility = facility; }
 
     public User getUser() { return user; }
     public void setUser(User user) { this.user = user; }

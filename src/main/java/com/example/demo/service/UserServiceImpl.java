@@ -1,4 +1,4 @@
-package com.example.demo.service.impl;
+package com.example.demo.service;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import com.example.demo.exception.BadRequestException;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -23,8 +22,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public User register(User user) {
 
-        if (userRepository.existsByEmail(user.getEmail())) {
-            throw new BadRequestException("duplicate email");
+        if (userRepository.existsByUsername(user.getUsername())) {
+            throw new BadRequestException("duplicate username");
         }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -37,11 +36,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByEmail(String email) {
-        return userRepository.findAll()
-                .stream()
-                .filter(u -> email.equals(u.getEmail()))
-                .findFirst()
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username)
                 .orElseThrow(() -> new BadRequestException("User not found"));
     }
 }
