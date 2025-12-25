@@ -1,14 +1,11 @@
-package com.example.demo.service.impl;
+package com.example.demo.service;
 
 import java.time.LocalTime;
-import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.demo.exception.BadRequestException;
 import com.example.demo.model.Facility;
 import com.example.demo.repository.FacilityRepository;
-import com.example.demo.service.FacilityService;
 
 @Service
 public class FacilityServiceImpl implements FacilityService {
@@ -20,20 +17,15 @@ public class FacilityServiceImpl implements FacilityService {
     }
 
     @Override
-    public Facility addFacility(Facility facility) {
+    public Facility saveFacility(Facility facility) {
 
-        LocalTime open = LocalTime.parse(facility.getOpenTime());
-        LocalTime close = LocalTime.parse(facility.getCloseTime());
+        LocalTime openTime = facility.getOpenTime();
+        LocalTime closeTime = facility.getCloseTime();
 
-        if (!open.isBefore(close)) {
-            throw new BadRequestException("time invalid");
+        if (openTime.isAfter(closeTime)) {
+            throw new RuntimeException("Invalid facility time");
         }
 
         return facilityRepository.save(facility);
-    }
-
-    @Override
-    public List<Facility> getAllFacilities() {
-        return facilityRepository.findAll();
     }
 }
