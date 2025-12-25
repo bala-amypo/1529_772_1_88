@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import java.time.LocalTime;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -27,5 +28,10 @@ public class FacilityServiceImpl implements FacilityService {
         }
 
         return facilityRepository.save(facility);
+    }
+
+    @Override
+    public List<Facility> getAllFacilities() {
+        return facilityRepository.findAll();
     }
 }

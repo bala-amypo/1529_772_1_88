@@ -5,7 +5,7 @@ import com.example.demo.model.Facility;
 
 public interface FacilityService {
 
-    Facility addFacility(Facility facility);
+    Facility saveFacility(Facility facility);
 
     List<Facility> getAllFacilities();
 }
