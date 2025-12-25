@@ -1,30 +1,30 @@
 package com.example.demo.service;
 
-import org.springframework.stereotype.Service;
 import com.example.demo.model.Booking;
+import com.example.demo.repository.BookingRepository;
+import org.springframework.stereotype.Service;
 
 @Service
 public class BookingServiceImpl implements BookingService {
 
-    @Override
+    private final BookingRepository repository;
+
+    public BookingServiceImpl(BookingRepository repository) {
+        this.repository = repository;
+    }
+
     public Booking createBooking(Booking booking) {
         booking.setStatus(Booking.STATUS_CONFIRMED);
-        return booking;
+        return repository.save(booking);
     }
 
-    @Override
-    public Booking getBooking(Long id) {
-        Booking booking = new Booking();
-        booking.setId(id);
-        booking.setStatus(Booking.STATUS_CONFIRMED);
-        return booking;
-    }
-
-    @Override
-    public Booking cancelBooking(Long id) {
-        Booking booking = new Booking();
-        booking.setId(id);
+    public void cancelBooking(Long id) {
+        Booking booking = repository.findById(id).orElseThrow();
         booking.setStatus(Booking.STATUS_CANCELLED);
-        return booking;
+        repository.save(booking);
+    }
+
+    public Booking getBooking(Long id) {
+        return repository.findById(id).orElseThrow();
     }
 }

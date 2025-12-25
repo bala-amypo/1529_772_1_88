@@ -6,32 +6,43 @@ import java.time.LocalDateTime;
 @Entity
 public class Booking {
 
+    public static final String STATUS_CONFIRMED = "CONFIRMED";
+    public static final String STATUS_CANCELLED = "CANCELLED";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private Facility facility;
+    private String status;
 
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private String status;
+
+    @ManyToOne
+    private Facility facility;
 
     public Booking() {}
 
-    public Booking(Facility facility, LocalDateTime startTime, LocalDateTime endTime, String status) {
-        this.facility = facility;
-        this.startTime = startTime;
-        this.endTime = endTime;
+    public Booking(Long id, Booking booking, String status, LocalDateTime time) {
+        this.id = id;
         this.status = status;
+        this.startTime = time;
     }
 
     public Long getId() {
         return id;
     }
 
-    public Facility getFacility() {
-        return facility;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public LocalDateTime getStartTime() {
@@ -42,23 +53,7 @@ public class Booking {
         return endTime;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setFacility(Facility facility) {
-        this.facility = facility;
-    }
-
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    public Facility getFacility() {
+        return facility;
     }
 }
