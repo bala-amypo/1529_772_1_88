@@ -1,32 +1,31 @@
 package com.example.demo.model;
 
 import java.time.LocalDateTime;
-
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "booking_logs")
 public class BookingLog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Booking booking;
 
+    @Column(nullable = false)
     private String logMessage;
 
     private LocalDateTime loggedAt;
 
-    public BookingLog() {
-    }
+    public BookingLog() {}
 
     @PrePersist
     public void onCreate() {
         this.loggedAt = LocalDateTime.now();
     }
 
-   
     public Long getId() {
         return id;
     }
