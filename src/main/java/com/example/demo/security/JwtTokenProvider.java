@@ -10,7 +10,7 @@ public class JwtTokenProvider {
         return "dummy-token";
     }
 
-    public String generateToken(Authentication authentication, Long userId, String role) {
+    public String generateToken(Authentication auth, Long userId, String role) {
         return "dummy-token";
     }
 
@@ -23,7 +23,7 @@ public class JwtTokenProvider {
     }
 
     public String getRoleFromToken(String token) {
-        return "RESIDENT";
+        return "USER";
     }
 
     public boolean validateToken(String token) {
