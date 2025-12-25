@@ -13,13 +13,17 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId;
-    private Long facilityId;
-
     private String status;
+
     private LocalDateTime bookingTime;
 
     public Booking() {}
+
+    public Booking(Long id, Booking booking, String status, LocalDateTime bookingTime) {
+        this.id = id;
+        this.status = status;
+        this.bookingTime = bookingTime;
+    }
 
     public Long getId() {
         return id;
@@ -27,22 +31,6 @@ public class Booking {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Long getFacilityId() {
-        return facilityId;
-    }
-
-    public void setFacilityId(Long facilityId) {
-        this.facilityId = facilityId;
     }
 
     public String getStatus() {
