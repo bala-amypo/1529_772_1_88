@@ -31,7 +31,7 @@ public class AuthController {
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword());
 
-        UserEntity savedUser = userService.register(user);
+        User savedUser = userService.register(user);
 
         String token = jwtTokenProvider.generateToken(
                 savedUser.getEmail(),
