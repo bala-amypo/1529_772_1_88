@@ -6,5 +6,5 @@ public interface UserService {
 
     User register(User user);
 
-    User findByUsername(String username); // ✅ FIX
+    User findByUsername(String username);
 }

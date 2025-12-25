@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User register(User user) {
 
-        if (userRepository.existsByUsername(user.getUsername())) { // ✅ FIX
+        if (userRepository.existsByUsername(user.getUsername())) {
             throw new BadRequestException("duplicate username");
         }
 
@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByUsername(String username) { // ✅ FIX
+    public User findByUsername(String username) {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new BadRequestException("User not found"));
     }
