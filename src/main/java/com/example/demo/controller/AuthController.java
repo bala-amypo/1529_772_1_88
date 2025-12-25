@@ -27,14 +27,13 @@ public class AuthController {
     public ResponseEntity<LoginResponse> register(@RequestBody RegisterRequest request) {
 
         User user = new User();
-        user.setName(request.getName());
-        user.setEmail(request.getEmail());
-        user.setPassword(request.getPassword());
+        user.setUsername(request.getUsername());   // ✅ FIX
+        user.setPassword(request.getPassword());   // ✅ FIX
 
         User savedUser = userService.register(user);
 
         String token = jwtTokenProvider.generateToken(
-                savedUser.getEmail(),
+                savedUser.getUsername(),           // ✅ FIX
                 savedUser.getId(),
                 savedUser.getRole()
         );
@@ -43,7 +42,7 @@ public class AuthController {
                 new LoginResponse(
                         token,
                         savedUser.getId(),
-                        savedUser.getEmail(),
+                        savedUser.getUsername(),   // ✅ FIX
                         savedUser.getRole()
                 ),
                 HttpStatus.CREATED
