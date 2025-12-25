@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity register(UserEntity user) {
+    public User register(User user) {
 
         if (userRepository.existsByEmail(user.getEmail())) {
             throw new BadRequestException("duplicate email");
@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity findByEmail(String email) {
+    public User findByEmail(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new BadRequestException("User not found"));
     }

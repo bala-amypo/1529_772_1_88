@@ -9,7 +9,7 @@ import com.example.demo.exception.ConflictException;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Booking;
 import com.example.demo.model.Facility;
-import com.example.demo.model.UserEntity;
+import com.example.demo.model.User;
 import com.example.demo.repository.BookingRepository;
 import com.example.demo.repository.FacilityRepository;
 import com.example.demo.repository.UserRepository;
@@ -42,7 +42,7 @@ public class BookingServiceImpl implements BookingService {
         Facility facility = facilityRepository.findById(facilityId)
                 .orElseThrow(() -> new ResourceNotFoundException("Facility not found"));
 
-        UserEntity user = userRepository.findById(userId)
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         List<Booking> conflicts =
