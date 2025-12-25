@@ -4,9 +4,9 @@ import com.example.demo.model.Booking;
 
 public interface BookingService {
 
-    Booking createBooking(Long facilityId, Long userId, Booking booking);
+    Booking createBooking(Booking booking);
 
-    Booking cancelBooking(Long bookingId);
+    Booking getBooking(Long id);
 
-    Booking getBooking(Long bookingId);
+    Booking cancelBooking(Long id);
 }
