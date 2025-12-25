@@ -10,49 +10,42 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String purpose;
-    private LocalDateTime bookingTime;
+    @ManyToOne
+    private ApartmentUnit facility;
 
     @ManyToOne
     private User user;
 
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
+    private String status;
+
     public Booking() {}
 
-    public Booking(Long id, String purpose, LocalDateTime bookingTime) {
-        this.id = id;
-        this.purpose = purpose;
-        this.bookingTime = bookingTime;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getPurpose() {
-        return purpose;
-    }
-
-    public void setPurpose(String purpose) {
-        this.purpose = purpose;
-    }
-
-    public LocalDateTime getBookingTime() {
-        return bookingTime;
-    }
-
-    public void setBookingTime(LocalDateTime bookingTime) {
-        this.bookingTime = bookingTime;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
+    public Booking(ApartmentUnit facility, User user,
+                   LocalDateTime startTime, LocalDateTime endTime, String status) {
+        this.facility = facility;
         this.user = user;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.status = status;
     }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public ApartmentUnit getFacility() { return facility; }
+    public void setFacility(ApartmentUnit facility) { this.facility = facility; }
+
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
+
+    public LocalDateTime getStartTime() { return startTime; }
+    public void setStartTime(LocalDateTime startTime) { this.startTime = startTime; }
+
+    public LocalDateTime getEndTime() { return endTime; }
+    public void setEndTime(LocalDateTime endTime) { this.endTime = endTime; }
+
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 }

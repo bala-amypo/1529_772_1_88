@@ -10,37 +10,28 @@ public class ApartmentUnit {
     private Long id;
 
     private String unitNumber;
-    private int floor;
+    private int capacity;
+
+    @ManyToOne
+    private User owner;
 
     public ApartmentUnit() {}
 
-    public ApartmentUnit(Long id, String unitNumber, int floor, User user) {
-        this.id = id;
+    public ApartmentUnit(String unitNumber, int capacity, User owner) {
         this.unitNumber = unitNumber;
-        this.floor = floor;
+        this.capacity = capacity;
+        this.owner = owner;
     }
 
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getUnitNumber() { return unitNumber; }
+    public void setUnitNumber(String unitNumber) { this.unitNumber = unitNumber; }
 
-    public String getUnitNumber() {
-        return unitNumber;
-    }
+    public int getCapacity() { return capacity; }
+    public void setCapacity(int capacity) { this.capacity = capacity; }
 
-    public void setUnitNumber(String unitNumber) {
-        this.unitNumber = unitNumber;
-    }
-
-    public int getFloor() {
-        return floor;
-    }
-
-    public void setFloor(int floor) {
-        this.floor = floor;
-    }
+    public User getOwner() { return owner; }
+    public void setOwner(User owner) { this.owner = owner; }
 }
