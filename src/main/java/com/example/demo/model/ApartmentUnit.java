@@ -1,40 +1,21 @@
 package com.example.demo.model;
 
-import java.time.LocalTime;
+public class ApartmentUnit {
 
-public class Facility {
+    private String unitNumber;
+    private int floor;
+    private User user;
 
-    private Long id;
-    private String name;
-    private LocalTime openTime;
-    private LocalTime closeTime;
-
-    public Facility() {
+    public ApartmentUnit() {
     }
 
-    public Facility(String name, LocalTime openTime, LocalTime closeTime) {
-        this.name = name;
-        this.openTime = openTime;
-        this.closeTime = closeTime;
+    public ApartmentUnit(String unitNumber, int floor, User user) {
+        this.unitNumber = unitNumber;
+        this.floor = floor;
+        this.user = user;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public LocalTime getOpenTime() {
-        return openTime;
-    }
-
-    public LocalTime getCloseTime() {
-        return closeTime;
-    }
+    public String getUnitNumber() { return unitNumber; }
+    public int getFloor() { return floor; }
+    public User getUser() { return user; }
 }
