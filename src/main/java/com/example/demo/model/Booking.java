@@ -14,11 +14,15 @@ public class Booking {
     private Long id;
 
     private String status;
+
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
     @ManyToOne
     private User user;
+
+    @ManyToOne
+    private Facility facility;
 
     public Booking() {}
 
@@ -42,4 +46,7 @@ public class Booking {
 
     public User getUser() { return user; }
     public void setUser(User user) { this.user = user; }
+
+    public Facility getFacility() { return facility; }
+    public void setFacility(Facility facility) { this.facility = facility; }
 }
