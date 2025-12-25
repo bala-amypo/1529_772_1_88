@@ -3,15 +3,15 @@ package com.example.demo.model;
 public class ApartmentUnit {
 
     private Long id;
-    private String name;
+    private String unitNumber;
     private int floor;
     private User owner;
 
     public ApartmentUnit() {
     }
 
-    public ApartmentUnit(String name, int floor, User owner) {
-        this.name = name;
+    public ApartmentUnit(String unitNumber, int floor, User owner) {
+        this.unitNumber = unitNumber;
         this.floor = floor;
         this.owner = owner;
     }
@@ -24,12 +24,12 @@ public class ApartmentUnit {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUnitNumber() {
+        return unitNumber;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUnitNumber(String unitNumber) {
+        this.unitNumber = unitNumber;
     }
 
     public int getFloor() {
