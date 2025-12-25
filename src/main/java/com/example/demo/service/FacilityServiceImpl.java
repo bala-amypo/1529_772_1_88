@@ -1,25 +1,22 @@
+
 package com.example.demo.service;
 
-import com.example.demo.model.Facility;
-import com.example.demo.repository.FacilityRepository;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
+import java.util.ArrayList;
+
+import org.springframework.stereotype.Service;
+import com.example.demo.model.Facility;
 
 @Service
 public class FacilityServiceImpl implements FacilityService {
 
-    private final FacilityRepository repository;
-
-    public FacilityServiceImpl(FacilityRepository repository) {
-        this.repository = repository;
+    @Override
+    public Facility saveFacility(Facility facility) {
+        return facility;
     }
 
-    public Facility addFacility(Facility facility) {
-        return repository.save(facility);
-    }
-
+    @Override
     public List<Facility> getAllFacilities() {
-        return repository.findAll();
+        return new ArrayList<>();
     }
 }
