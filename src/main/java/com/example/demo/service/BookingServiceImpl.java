@@ -8,7 +8,9 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public Booking createBooking(Long userId, Long facilityId, Booking booking) {
-        booking.setStatus(Booking.STATUS_CONFIRMED);
+        booking.setUserId(userId);
+        booking.setFacilityId(facilityId);
+        booking.setStatus("CONFIRMED");
         return booking;
     }
 
@@ -16,14 +18,7 @@ public class BookingServiceImpl implements BookingService {
     public Booking cancelBooking(Long bookingId) {
         Booking booking = new Booking();
         booking.setId(bookingId);
-        booking.setStatus(Booking.STATUS_CANCELLED);
-        return booking;
-    }
-
-    @Override
-    public Booking getBooking(Long bookingId) {
-        Booking booking = new Booking();
-        booking.setId(bookingId);
+        booking.setStatus("CANCELLED");
         return booking;
     }
 }

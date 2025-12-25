@@ -14,10 +14,15 @@ public class BookingController {
         this.bookingService = bookingService;
     }
 
-    @PostMapping
-    public Booking createBooking(@RequestBody Booking booking) {
-        return bookingService.createBooking(booking);
-    }
+    @PostMapping("/book/{userId}/{facilityId}")
+public Booking createBooking(
+        @PathVariable Long userId,
+        @PathVariable Long facilityId,
+        @RequestBody Booking booking) {
+
+    return bookingService.createBooking(userId, facilityId, booking);
+}
+
 
     @GetMapping("/{id}")
     public Booking getBooking(@PathVariable Long id) {
