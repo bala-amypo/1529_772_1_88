@@ -1,40 +1,27 @@
 package com.example.demo.model;
 
-import java.time.LocalDateTime;
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Booking {
-
-    public static final String STATUS_CONFIRMED = "CONFIRMED";
-    public static final String STATUS_CANCELLED = "CANCELLED";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private Facility facility;
+    private String purpose;
+    private LocalDateTime bookingTime;
 
     @ManyToOne
     private User user;
 
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    public Booking() {}
 
-    private String status;
-
-    public Booking() {
-    }
-
-    public Booking(Long id, Facility facility, User user,
-                   LocalDateTime startTime, LocalDateTime endTime, String status) {
+    public Booking(Long id, String purpose, LocalDateTime bookingTime) {
         this.id = id;
-        this.facility = facility;
-        this.user = user;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.status = status;
+        this.purpose = purpose;
+        this.bookingTime = bookingTime;
     }
 
     public Long getId() {
@@ -45,12 +32,20 @@ public class Booking {
         this.id = id;
     }
 
-    public Facility getFacility() {
-        return facility;
+    public String getPurpose() {
+        return purpose;
     }
 
-    public void setFacility(Facility facility) {
-        this.facility = facility;
+    public void setPurpose(String purpose) {
+        this.purpose = purpose;
+    }
+
+    public LocalDateTime getBookingTime() {
+        return bookingTime;
+    }
+
+    public void setBookingTime(LocalDateTime bookingTime) {
+        this.bookingTime = bookingTime;
     }
 
     public User getUser() {
@@ -59,29 +54,5 @@ public class Booking {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public LocalDateTime getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public LocalDateTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 }
