@@ -1,10 +1,11 @@
 package com.example.demo.service.impl;
 
+import java.time.LocalTime;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.exception.BadRequestException;
 import com.example.demo.model.Facility;
 import com.example.demo.repository.FacilityRepository;
 import com.example.demo.service.FacilityService;
@@ -12,11 +13,22 @@ import com.example.demo.service.FacilityService;
 @Service
 public class FacilityServiceImpl implements FacilityService {
 
-    @Autowired
-    private FacilityRepository facilityRepository;
+    private final FacilityRepository facilityRepository;
+
+    public FacilityServiceImpl(FacilityRepository facilityRepository) {
+        this.facilityRepository = facilityRepository;
+    }
 
     @Override
     public Facility addFacility(Facility facility) {
+
+        LocalTime open = LocalTime.parse(facility.getOpenTime());
+        LocalTime close = LocalTime.parse(facility.getCloseTime());
+
+        if (!open.isBefore(close)) {
+            throw new BadRequestException("time invalid");
+        }
+
         return facilityRepository.save(facility);
     }
 
