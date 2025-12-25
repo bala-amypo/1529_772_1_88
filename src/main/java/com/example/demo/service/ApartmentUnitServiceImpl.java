@@ -1,31 +1,46 @@
-package com.example.demo.service;
+package com.example.demo.service.impl;
 
+import com.example.demo.exception.BadRequestException;
 import com.example.demo.model.ApartmentUnit;
-import com.example.demo.model.UserEntity;
+import com.example.demo.model.User;
 import com.example.demo.repository.ApartmentUnitRepository;
 import com.example.demo.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.service.ApartmentUnitService;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ApartmentUnitServiceImpl implements ApartmentUnitService {
 
-    @Autowired
-    private ApartmentUnitRepository apartmentUnitRepository;
+    private final ApartmentUnitRepository apartmentUnitRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    public ApartmentUnitServiceImpl(ApartmentUnitRepository apartmentUnitRepository,
+                                    UserRepository userRepository) {
+        this.apartmentUnitRepository = apartmentUnitRepository;
+        this.userRepository = userRepository;
+    }
 
     @Override
     public ApartmentUnit assignUnitToUser(Long userId, ApartmentUnit unit) {
-        UserEntity user = userRepository.findById(userId).orElse(null);
-        unit.setUser(user);
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BadRequestException("Invalid user"));
+
+        if (apartmentUnitRepository.existsByUnitNumber(unit.getUnitNumber())) {
+            throw new BadRequestException("constraint violation");
+        }
+
+        unit.setOwner(user);
         return apartmentUnitRepository.save(unit);
     }
 
     @Override
     public ApartmentUnit getUnitByUser(Long userId) {
-        UserEntity user = userRepository.findById(userId).orElse(null);
-        return apartmentUnitRepository.findByUser(user).orElse(null);
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BadRequestException("Invalid user"));
+
+        return apartmentUnitRepository.findByOwner(user)
+                .orElseThrow(() -> new BadRequestException("Apartment unit not found"));
     }
 }
