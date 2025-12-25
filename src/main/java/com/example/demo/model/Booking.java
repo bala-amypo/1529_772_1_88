@@ -1,11 +1,31 @@
 package com.example.demo.model;
 
+import java.time.LocalDateTime;
+
 public class Booking {
 
+    public static final String STATUS_CONFIRMED = "CONFIRMED";
+    public static final String STATUS_CANCELLED = "CANCELLED";
+
     private Long id;
-    private Long userId;
-    private Long facilityId;
+    private User user;
+    private Facility facility;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     private String status;
+
+    public Booking() {
+    }
+
+    public Booking(Long id, User user, Facility facility,
+                   LocalDateTime startTime, LocalDateTime endTime, String status) {
+        this.id = id;
+        this.user = user;
+        this.facility = facility;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.status = status;
+    }
 
     public Long getId() {
         return id;
@@ -15,20 +35,36 @@ public class Booking {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Long getFacilityId() {
-        return facilityId;
+    public Facility getFacility() {
+        return facility;
     }
 
-    public void setFacilityId(Long facilityId) {
-        this.facilityId = facilityId;
+    public void setFacility(Facility facility) {
+        this.facility = facility;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 
     public String getStatus() {

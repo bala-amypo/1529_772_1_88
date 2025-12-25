@@ -1,32 +1,40 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
+import java.time.LocalTime;
 
-@Entity
-public class ApartmentUnit {
+public class Facility {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
+    private LocalTime openTime;
+    private LocalTime closeTime;
 
-    private String unitNumber;
-
-    @ManyToOne
-    private User owner;
-
-    public ApartmentUnit() {}
-
-    public ApartmentUnit(String unitNumber, int floor, User owner) {
-        this.unitNumber = unitNumber;
-        this.owner = owner;
+    public Facility() {
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Facility(String name, LocalTime openTime, LocalTime closeTime) {
+        this.name = name;
+        this.openTime = openTime;
+        this.closeTime = closeTime;
+    }
 
-    public String getUnitNumber() { return unitNumber; }
-    public void setUnitNumber(String unitNumber) { this.unitNumber = unitNumber; }
+    public Long getId() {
+        return id;
+    }
 
-    public User getOwner() { return owner; }
-    public void setOwner(User owner) { this.owner = owner; }
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public LocalTime getOpenTime() {
+        return openTime;
+    }
+
+    public LocalTime getCloseTime() {
+        return closeTime;
+    }
 }
