@@ -1,25 +1,44 @@
-package com.example.demo.service;
+package com.example.demo.service.impl;
 
-
-import com.example.demo.model.UserEntity;
-import com.example.demo.repository.UserRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-@Service
-public class UserServiceImp implements UserService {
+import com.example.demo.exception.BadRequestException;
+import com.example.demo.model.UserEntity;
+import com.example.demo.repository.UserRepository;
+import com.example.demo.service.UserService;
 
-    @Autowired
-    private UserRepository userRepository;
+@Service
+public class UserServiceImpl implements UserService {
+
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    public UserServiceImpl(UserRepository userRepository,
+                           PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
-    public UserEntity createUser(UserEntity user) {
+    public UserEntity register(UserEntity user) {
+
+        if (userRepository.existsByEmail(user.getEmail())) {
+            throw new BadRequestException("duplicate email");
+        }
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        if (user.getRole() == null) {
+            user.setRole("RESIDENT");
+        }
+
         return userRepository.save(user);
     }
-    @Override
-public java.util.List<UserEntity> getAllUsers() {
-    return userRepository.findAll();
-}
 
+    @Override
+    public UserEntity findByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new BadRequestException("User not found"));
+    }
 }
