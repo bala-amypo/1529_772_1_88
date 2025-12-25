@@ -2,7 +2,7 @@ package com.example.demo.service.impl;
 
 import com.example.demo.exception.BadRequestException;
 import com.example.demo.model.ApartmentUnit;
-import com.example.demo.model.UserEntity;
+import com.example.demo.model.User;
 import com.example.demo.repository.ApartmentUnitRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.ApartmentUnitService;
@@ -23,7 +23,7 @@ public class ApartmentUnitServiceImpl implements ApartmentUnitService {
     @Override
     public ApartmentUnit assignUnitToUser(Long userId, ApartmentUnit unit) {
 
-        UserEntity user = userRepository.findById(userId)
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new BadRequestException("Invalid user"));
 
         if (apartmentUnitRepository.existsByUnitNumber(unit.getUnitNumber())) {
@@ -37,7 +37,7 @@ public class ApartmentUnitServiceImpl implements ApartmentUnitService {
     @Override
     public ApartmentUnit getUnitByUser(Long userId) {
 
-        UserEntity user = userRepository.findById(userId)
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new BadRequestException("Invalid user"));
 
         return apartmentUnitRepository.findByOwner(user)
