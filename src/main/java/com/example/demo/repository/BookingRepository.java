@@ -12,7 +12,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     List<Booking> findByFacilityAndStartTimeLessThanAndEndTimeGreaterThan(
             Facility facility,
-            LocalDateTime start,
-            LocalDateTime end
+            LocalDateTime endTime,
+            LocalDateTime startTime
     );
 }
