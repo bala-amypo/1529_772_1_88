@@ -2,9 +2,9 @@ package com.example.demo.service.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Booking;
 import com.example.demo.model.BookingLog;
 import com.example.demo.repository.BookingLogRepository;
@@ -14,19 +14,20 @@ import com.example.demo.service.BookingLogService;
 @Service
 public class BookingLogServiceImpl implements BookingLogService {
 
-    @Autowired
-    private BookingLogRepository bookingLogRepository;
+    private final BookingLogRepository bookingLogRepository;
+    private final BookingRepository bookingRepository;
 
-    @Autowired
-    private BookingRepository bookingRepository;
+    public BookingLogServiceImpl(BookingLogRepository bookingLogRepository,
+                                 BookingRepository bookingRepository) {
+        this.bookingLogRepository = bookingLogRepository;
+        this.bookingRepository = bookingRepository;
+    }
 
     @Override
     public BookingLog addLog(Long bookingId, String message) {
 
-        Booking booking = bookingRepository.findById(bookingId).orElse(null);
-        if (booking == null) {
-            return null;
-        }
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new ResourceNotFoundException("Booking not found"));
 
         BookingLog log = new BookingLog();
         log.setBooking(booking);
@@ -38,22 +39,9 @@ public class BookingLogServiceImpl implements BookingLogService {
     @Override
     public List<BookingLog> getLogsByBooking(Long bookingId) {
 
-        Booking booking = bookingRepository.findById(bookingId).orElse(null);
-        if (booking == null) {
-            return null;
-        }
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new ResourceNotFoundException("Booking not found"));
 
         return bookingLogRepository.findByBookingOrderByLoggedAtAsc(booking);
     }
-    @Override
-public List<BookingLog> getAllLogs() {
-    return bookingLogRepository.findAll();
-}
-
-@Override
-public BookingLog saveLog(BookingLog bookingLog) {
-    return bookingLogRepository.save(bookingLog);
-}
-
-  
 }
