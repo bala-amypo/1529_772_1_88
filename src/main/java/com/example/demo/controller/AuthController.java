@@ -4,8 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.dto.RegisterRequest;
 import com.example.demo.dto.LoginResponse;
+import com.example.demo.dto.RegisterRequest;
 import com.example.demo.model.User;
 import com.example.demo.security.JwtTokenProvider;
 import com.example.demo.service.UserService;
@@ -27,7 +27,6 @@ public class AuthController {
     public ResponseEntity<LoginResponse> register(@RequestBody RegisterRequest request) {
 
         User user = new User();
-        user.setUsername(request.getName());
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword());
 
