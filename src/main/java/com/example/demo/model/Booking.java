@@ -4,31 +4,45 @@ import java.time.LocalDateTime;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "bookings")
 public class Booking {
+
+    public static final String STATUS_CONFIRMED = "CONFIRMED";
+    public static final String STATUS_CANCELLED = "CANCELLED";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Facility facility;
 
-    @ManyToOne(optional = false)
-    private UserEntity user;
+    @ManyToOne
+    private User user;
 
-    @Column(nullable = false)
     private LocalDateTime startTime;
-
-    @Column(nullable = false)
     private LocalDateTime endTime;
 
-    private String status = "CONFIRMED";
+    private String status;
 
-    public Booking() {}
+    public Booking() {
+    }
+
+    public Booking(Long id, Facility facility, User user,
+                   LocalDateTime startTime, LocalDateTime endTime, String status) {
+        this.id = id;
+        this.facility = facility;
+        this.user = user;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.status = status;
+    }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Facility getFacility() {
@@ -39,11 +53,11 @@ public class Booking {
         this.facility = facility;
     }
 
-    public UserEntity getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(UserEntity user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
