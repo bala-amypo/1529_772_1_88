@@ -1,5 +1,5 @@
 package com.example.demo.model;
-
+import com.example.demo.model.User;
 import jakarta.persistence.*;
 
 @Entity
@@ -18,7 +18,7 @@ public class ApartmentUnit {
 
     @OneToOne
     @JoinColumn(name = "owner_id")
-    private UserEntity owner;
+    private User owner;
 
     public ApartmentUnit() {}
 
@@ -50,7 +50,7 @@ public class ApartmentUnit {
         return owner;
     }
 
-    public void setOwner(UserEntity owner) {
+    public void setOwner(User owner) {
         this.owner = owner;
     }
 }
