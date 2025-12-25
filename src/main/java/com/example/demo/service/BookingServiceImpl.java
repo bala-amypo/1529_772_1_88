@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import org.springframework.stereotype.Service;
+
 import com.example.demo.model.Booking;
 
 @Service
@@ -10,6 +11,7 @@ public class BookingServiceImpl implements BookingService {
     public Booking createBooking(Long userId, Long facilityId, Booking booking) {
         booking.setUserId(userId);
         booking.setFacilityId(facilityId);
+        booking.setStatus(Booking.STATUS_CONFIRMED);
         return booking;
     }
 
@@ -17,15 +19,15 @@ public class BookingServiceImpl implements BookingService {
     public Booking getBooking(Long bookingId) {
         Booking booking = new Booking();
         booking.setId(bookingId);
+        booking.setStatus(Booking.STATUS_CONFIRMED);
         return booking;
     }
 
     @Override
-public Booking cancelBooking(Long bookingId) {
-    Booking booking = new Booking();
-    booking.setId(bookingId);
-    booking.setStatus(Booking.STATUS_CANCELLED);
-    return booking;
-}
-
+    public Booking cancelBooking(Long bookingId) {
+        Booking booking = new Booking();
+        booking.setId(bookingId);
+        booking.setStatus(Booking.STATUS_CANCELLED);
+        return booking;
+    }
 }
