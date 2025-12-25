@@ -46,7 +46,7 @@ public class ApartmentUnit {
         this.floor = floor;
     }
 
-    public UserEntity getOwner() {
+    public User getOwner() {
         return owner;
     }
 
