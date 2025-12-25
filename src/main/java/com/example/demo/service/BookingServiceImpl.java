@@ -21,10 +21,11 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Booking cancelBooking(Long bookingId) {
-        Booking booking = new Booking();
-        booking.setId(bookingId);
-        booking.setStatus("CANCELLED");
-        return booking;
-    }
+public Booking cancelBooking(Long bookingId) {
+    Booking booking = new Booking();
+    booking.setId(bookingId);
+    booking.setStatus(Booking.STATUS_CANCELLED);
+    return booking;
+}
+
 }
