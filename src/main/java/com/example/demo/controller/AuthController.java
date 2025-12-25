@@ -24,7 +24,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<LoginResponse> register(@RequestBody RegisterRequest request) {
 
         UserEntity user = new UserEntity();
         user.setName(request.getName());
@@ -40,7 +40,7 @@ public class AuthController {
         );
 
         return new ResponseEntity<>(
-                new AuthResponse(
+                new LoginResponse(
                         token,
                         savedUser.getId(),
                         savedUser.getEmail(),
