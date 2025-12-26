@@ -6,12 +6,13 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.demo.model.Booking;
+import com.example.demo.model.Facility;
 
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 
-    List<Booking> findByFacilityIdAndStartTimeLessThanAndEndTimeGreaterThan(
-            Long facilityId,
-            LocalDateTime startTime,
-            LocalDateTime endTime
+    List<Booking> findByFacilityAndStartTimeLessThanAndEndTimeGreaterThan(
+            Facility facility,
+            LocalDateTime endTime,
+            LocalDateTime startTime
     );
 }

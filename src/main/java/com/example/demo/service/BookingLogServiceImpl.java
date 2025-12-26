@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Booking;
 import com.example.demo.model.BookingLog;
 import com.example.demo.repository.BookingLogRepository;
@@ -25,23 +24,14 @@ public class BookingLogServiceImpl implements BookingLogService {
 
     @Override
     public BookingLog addLog(Long bookingId, String message) {
-
-        Booking booking = bookingRepository.findById(bookingId)
-                .orElseThrow(() -> new ResourceNotFoundException("Booking not found"));
-
-        BookingLog log = new BookingLog();
-        log.setBooking(booking);
-        log.setLogMessage(message);
-
+        Booking booking = bookingRepository.findById(bookingId).orElseThrow();
+        BookingLog log = new BookingLog(null, booking, message, null);
         return bookingLogRepository.save(log);
     }
 
     @Override
     public List<BookingLog> getLogsByBooking(Long bookingId) {
-
-        Booking booking = bookingRepository.findById(bookingId)
-                .orElseThrow(() -> new ResourceNotFoundException("Booking not found"));
-
+        Booking booking = bookingRepository.findById(bookingId).orElseThrow();
         return bookingLogRepository.findByBookingOrderByLoggedAtAsc(booking);
     }
 }
