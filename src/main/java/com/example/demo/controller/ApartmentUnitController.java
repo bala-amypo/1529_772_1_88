@@ -1,17 +1,29 @@
 package com.example.demo.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.service.ApartmentUnitServiceImpl;
+import com.example.demo.model.ApartmentUnit;
+import com.example.demo.service.ApartmentUnitService;
 
 @RestController
-@RequestMapping("/apartment-units")
+@RequestMapping("/units")
 public class ApartmentUnitController {
 
-    private final ApartmentUnitServiceImpl service;
+    private final ApartmentUnitService apartmentUnitService;
 
-    public ApartmentUnitController(ApartmentUnitServiceImpl service) {
-        this.service = service;
+    public ApartmentUnitController(ApartmentUnitService apartmentUnitService) {
+        this.apartmentUnitService = apartmentUnitService;
+    }
+
+    @PostMapping("/assign/{userId}")
+    public ResponseEntity<ApartmentUnit> assignUnit(@PathVariable Long userId,
+                                                    @RequestBody ApartmentUnit unit) {
+        return ResponseEntity.ok(apartmentUnitService.assignUnitToUser(userId, unit));
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<ApartmentUnit> getUnitByUser(@PathVariable Long userId) {
+        return ResponseEntity.ok(apartmentUnitService.getUnitByUser(userId));
     }
 }

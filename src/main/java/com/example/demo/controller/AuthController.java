@@ -1,11 +1,10 @@
 package com.example.demo.controller;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.dto.LoginResponse;
 import com.example.demo.dto.RegisterRequest;
+import com.example.demo.dto.AuthResponse;
 import com.example.demo.model.User;
 import com.example.demo.security.JwtTokenProvider;
 import com.example.demo.service.UserService;
@@ -24,28 +23,29 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<LoginResponse> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
 
         User user = new User();
+        user.setName(request.getName());
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword());
 
         User savedUser = userService.register(user);
 
         String token = jwtTokenProvider.generateToken(
-                savedUser.getEmail(),
+                null,
                 savedUser.getId(),
+                savedUser.getEmail(),
                 savedUser.getRole()
         );
 
-        return new ResponseEntity<>(
-                new LoginResponse(
+        return ResponseEntity.ok(
+                new AuthResponse(
                         token,
                         savedUser.getId(),
                         savedUser.getEmail(),
                         savedUser.getRole()
-                ),
-                HttpStatus.CREATED
+                )
         );
     }
 }
