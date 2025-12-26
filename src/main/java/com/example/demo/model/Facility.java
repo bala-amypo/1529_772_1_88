@@ -1,27 +1,29 @@
 package com.example.demo.model;
 
-import java.time.LocalTime;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Entity
+@Table(name = "facilities")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Facility {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(unique = true, nullable = false)
     private String name;
-    private LocalTime openTime;
-    private LocalTime closeTime;
 
-    public Facility() {
-    }
+    private String description;
 
-    public Facility(String name, LocalTime openTime, LocalTime closeTime) {
-        this.name = name;
-        this.openTime = openTime;
-        this.closeTime = closeTime;
-    }
+    @Column(nullable = false)
+    private String openTime;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public String getName() { return name; }
-    public LocalTime getOpenTime() { return openTime; }
-    public LocalTime getCloseTime() { return closeTime; }
+    @Column(nullable = false)
+    private String closeTime;
 }
