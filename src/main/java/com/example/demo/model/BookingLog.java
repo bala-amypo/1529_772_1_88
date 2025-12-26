@@ -18,17 +18,16 @@ public class BookingLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "booking_id", nullable = false)
     private Booking booking;
 
-    @Column(nullable = false)
     private String logMessage;
 
     private LocalDateTime loggedAt;
 
     @PrePersist
     public void onCreate() {
-        this.loggedAt = LocalDateTime.now();
+        loggedAt = LocalDateTime.now();
     }
 }
