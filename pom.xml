@@ -92,6 +92,20 @@
             <version>7.8.0</version>
             <scope>test</scope>
         </dependency>
+<!-- Mockito (required by test suite) -->
+<dependency>
+    <groupId>org.mockito</groupId>
+    <artifactId>mockito-core</artifactId>
+    <version>5.11.0</version>
+    <scope>test</scope>
+</dependency>
+
+<!-- Spring Test (for MockHttpServletRequest / Response) -->
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-test</artifactId>
+    <scope>test</scope>
+</dependency>
 
     </dependencies>
 
