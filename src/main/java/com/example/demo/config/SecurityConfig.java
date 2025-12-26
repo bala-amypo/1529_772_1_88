@@ -17,7 +17,10 @@ public class SecurityConfig {
 
     @Bean
     public JwtTokenProvider jwtTokenProvider() {
-        return new JwtTokenProvider("my-secret-key", 3600000);
+        return new JwtTokenProvider(
+            "MySuperSecretJwtKeyForApartmentSystem123456",
+            3600000
+        );
     }
 
     @Bean
