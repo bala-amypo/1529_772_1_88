@@ -1,10 +1,7 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -34,14 +31,10 @@ public class Booking {
     @OneToMany(mappedBy = "booking")
     private List<BookingLog> logs;
 
-    // REQUIRED BY TESTS
-    public Booking(Long id, Facility facility, User user,
-                   LocalDateTime startTime, LocalDateTime endTime, String status) {
-        this.id = id;
-        this.facility = facility;
-        this.user = user;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.status = status;
+    @PrePersist
+    public void onCreate() {
+        if (this.status == null) {
+            this.status = STATUS_CONFIRMED;
+        }
     }
 }
