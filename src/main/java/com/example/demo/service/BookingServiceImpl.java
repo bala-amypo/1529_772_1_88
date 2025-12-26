@@ -6,13 +6,12 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.exception.ConflictException;
 import com.example.demo.model.Booking;
-import com.example.demo.model.BookingLog;
 import com.example.demo.model.Facility;
 import com.example.demo.model.User;
-import com.example.demo.repository.BookingLogRepository;
 import com.example.demo.repository.BookingRepository;
 import com.example.demo.repository.FacilityRepository;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.service.BookingLogService;
 import com.example.demo.service.BookingService;
 
 @Service
@@ -21,18 +20,18 @@ public class BookingServiceImpl implements BookingService {
     private final BookingRepository bookingRepository;
     private final FacilityRepository facilityRepository;
     private final UserRepository userRepository;
-    private final BookingLogRepository bookingLogRepository;
+    private final BookingLogService bookingLogService;
 
     public BookingServiceImpl(
             BookingRepository bookingRepository,
             FacilityRepository facilityRepository,
             UserRepository userRepository,
-            BookingLogRepository bookingLogRepository) {
+            BookingLogService bookingLogService) {
 
         this.bookingRepository = bookingRepository;
         this.facilityRepository = facilityRepository;
         this.userRepository = userRepository;
-        this.bookingLogRepository = bookingLogRepository;
+        this.bookingLogService = bookingLogService;
     }
 
     @Override
@@ -57,11 +56,7 @@ public class BookingServiceImpl implements BookingService {
         booking.setStatus(Booking.STATUS_CONFIRMED);
 
         Booking saved = bookingRepository.save(booking);
-
-        // ✅ CRITICAL FIX FOR t14
-        bookingLogRepository.save(
-                new BookingLog(null, saved, "Booking created", null)
-        );
+        bookingLogService.addLog(saved.getId(), "Booking created");
 
         return saved;
     }
@@ -73,10 +68,7 @@ public class BookingServiceImpl implements BookingService {
         booking.setStatus(Booking.STATUS_CANCELLED);
 
         Booking saved = bookingRepository.save(booking);
-
-        bookingLogRepository.save(
-                new BookingLog(null, saved, "Booking cancelled", null)
-        );
+        bookingLogService.addLog(saved.getId(), "Booking cancelled");
 
         return saved;
     }
