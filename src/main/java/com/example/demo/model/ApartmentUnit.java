@@ -1,27 +1,22 @@
 package com.example.demo.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "apartment_unit")
 public class ApartmentUnit {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String unitNumber;
-    private int floor;
-    private User owner;
+    private String status;
 
-    public ApartmentUnit() {
-    }
-
-    public ApartmentUnit(String unitNumber, int floor, User owner) {
-        this.unitNumber = unitNumber;
-        this.floor = floor;
-        this.owner = owner;
-    }
+    public ApartmentUnit() {}
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getUnitNumber() {
@@ -32,19 +27,11 @@ public class ApartmentUnit {
         this.unitNumber = unitNumber;
     }
 
-    public int getFloor() {
-        return floor;
+    public String getStatus() {
+        return status;
     }
 
-    public void setFloor(int floor) {
-        this.floor = floor;
-    }
-
-    public User getOwner() {
-        return owner;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
