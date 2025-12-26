@@ -1,3 +1,10 @@
+package com.example.demo.model;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,7 +27,7 @@ public class User {
     @OneToOne(mappedBy = "owner")
     private ApartmentUnit apartmentUnit;
 
-    // 🔥 REQUIRED BY TEST SUITE
+    // REQUIRED BY TESTS
     public User(Long id, String name, String email, String password, String role) {
         this.id = id;
         this.name = name;

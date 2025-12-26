@@ -1,17 +1,16 @@
 package com.example.demo.model;
 
-import java.time.LocalDateTime;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "booking_logs")
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class BookingLog {
 
     @Id
@@ -19,7 +18,6 @@ public class BookingLog {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "booking_id", nullable = false)
     private Booking booking;
 
     private String logMessage;
@@ -28,6 +26,6 @@ public class BookingLog {
 
     @PrePersist
     public void onCreate() {
-        loggedAt = LocalDateTime.now();
+        this.loggedAt = LocalDateTime.now();
     }
 }

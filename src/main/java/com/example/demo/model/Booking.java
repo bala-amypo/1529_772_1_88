@@ -1,15 +1,13 @@
 package com.example.demo.model;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "bookings")
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -36,7 +34,7 @@ public class Booking {
     @OneToMany(mappedBy = "booking")
     private List<BookingLog> logs;
 
-    // 🔥 REQUIRED BY TEST SUITE
+    // REQUIRED BY TESTS
     public Booking(Long id, Facility facility, User user,
                    LocalDateTime startTime, LocalDateTime endTime, String status) {
         this.id = id;
