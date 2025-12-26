@@ -20,4 +20,9 @@ public class SimpleHelloServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setStatus(HttpServletResponse.SC_OK);
     }
+
+    @Override
+    public String getServletInfo() {
+        return "SimpleHelloServlet";
+    }
 }

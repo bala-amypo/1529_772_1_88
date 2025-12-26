@@ -1,58 +1,26 @@
-package com.example.demo.service.impl;
+@Override
+public Booking createBooking(Long facilityId, Long userId, Booking booking) {
 
-import com.example.demo.model.*;
-import com.example.demo.repository.*;
-import com.example.demo.service.BookingLogService;
-import com.example.demo.service.BookingService;
-import org.springframework.stereotype.Service;
+    Facility facility = facilityRepository.findById(facilityId).orElseThrow();
+    User user = userRepository.findById(userId).orElseThrow();
 
-@Service
-public class BookingServiceImpl implements BookingService {
+    List<Booking> conflicts =
+        bookingRepository.findByFacilityAndStartTimeLessThanAndEndTimeGreaterThan(
+            facility,
+            booking.getEndTime(),
+            booking.getStartTime()
+        );
 
-    private final BookingRepository bookingRepository;
-    private final FacilityRepository facilityRepository;
-    private final UserRepository userRepository;
-    private final BookingLogService bookingLogService;
-
-    public BookingServiceImpl(
-            BookingRepository bookingRepository,
-            FacilityRepository facilityRepository,
-            UserRepository userRepository,
-            BookingLogService bookingLogService
-    ) {
-        this.bookingRepository = bookingRepository;
-        this.facilityRepository = facilityRepository;
-        this.userRepository = userRepository;
-        this.bookingLogService = bookingLogService;
+    if (!conflicts.isEmpty()) {
+        throw new ConflictException("Booking conflict");
     }
 
-    @Override
-    public Booking createBooking(Long facilityId, Long userId, Booking booking) {
+    booking.setFacility(facility);
+    booking.setUser(user);
+    booking.setStatus(Booking.STATUS_CONFIRMED);
 
-        Facility facility = facilityRepository.findById(facilityId).orElseThrow();
-        User user = userRepository.findById(userId).orElseThrow();
+    Booking saved = bookingRepository.save(booking);
+    bookingLogService.addLog(saved.getId(), "Booking created");
 
-        booking.setFacility(facility);
-        booking.setUser(user);
-        booking.setStatus(Booking.STATUS_CONFIRMED);
-
-        Booking saved = bookingRepository.save(booking);
-        bookingLogService.addLog(saved.getId(), "Booking created");
-
-        return saved;
-    }
-
-    @Override
-    public Booking cancelBooking(Long bookingId) {
-        Booking booking = bookingRepository.findById(bookingId).orElseThrow();
-        booking.setStatus(Booking.STATUS_CANCELLED);
-        Booking updated = bookingRepository.save(booking);
-        bookingLogService.addLog(updated.getId(), "Booking cancelled");
-        return updated;
-    }
-
-    @Override
-    public Booking getBooking(Long bookingId) {
-        return bookingRepository.findById(bookingId).orElseThrow();
-    }
+    return saved;
 }
